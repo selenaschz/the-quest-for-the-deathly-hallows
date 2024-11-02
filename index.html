@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Deathly Hallows</title>
+    <link rel="shortcut icon" href="assets/images/favicon.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!--Game container-->
+     <div class="game">
+        <h1 id="game-title"> Hogwarts: The Quest for the Deathly Hallows </h1>
+        <div id="main-menu" class="menu">
+            <!-- Main Menu -->
+            <div id="menu-options">
+                <button id ="story-bt" class="bt-options"> 
+                    Game story
+                    <img src="assets/images/menu/wand.png" alt="Elder Wand" class="select-icon">
+                </button>
+    
+                <button id ="instructions-bt" class="bt-options"> 
+                    Instructions
+                    <img src="assets/images/menu/stole.png" alt="Resurrection Stone" class="select-icon ">
+                </button>
+    
+                <button id ="start-test-bt" class="bt-options"> 
+                    Sorting Hat Quiz
+                    <img src="assets/images/menu/cloak.png" alt="Cloak of Invisibility" class="select-icon">
+                </button>
+
+                <button id ="scores-bt" class="bt-options"> 
+                    Scores
+                    <img src="assets/images/menu/scores.png" alt="scores" class="select-icon">
+                </button>
+            </div>
+        </div>
+    
+        <!-- Game Story -->
+        <div id ="game-story" class="screen hidden">
+            <h2>Story</h2>
+            <p> Lord Voldemort has returned, and he already possesses the <strong> Elder Wand </strong>, one of the three Deathly Hallows and the most powerful of all wands. 
+                Now, his goal is to obtain the remaining two Hallows to consolidate his power and rule the wizarding world: 
+                <strong> Resurrection Stone </strong> will allow him to summon the dead and strengthen his army, 
+                and the <strong> Invisibility Cloak </strong> will make him undetectable while he carries out his sinister plan.</p>
+    
+            <p>As a brave student of Hogwarts, your task is to prevent Voldemort from obtaining these relics. You must explore Hogwarts and its surroundings and face magical enemies.</p>
+            
+            <p>Use your magical abilities to overcome the obstacles in your path. The future of the wizarding world depends on you: if you manage to acquire the relics before Voldemort, 
+                you can save the magical community from chaos. Are you ready to become the hero that the wizarding world needs?</p>
+    
+            <button class="close-bt screen-style-bt"> Close </button>
+        </div>
+    
+        <!--Instructions-->
+        <div id="instructions" class="screen hidden">
+            <h2>Game Instructions</h2>
+            <ul class="list-instructions">
+                <li>
+                    <img src="assets/images/controls/up.png" alt="up key" class="controls">
+                    Jump: 
+                </li>
+                <li> 
+                    <img src="assets/images/controls/space.png" alt="space key" class="controls space"> <br>
+                    Cast a Spell to Attack: 
+                </li>
+                <li> 
+                    <img src="assets/images/controls/down.png" alt="down key" class="controls"> <br>
+                    Collect Magical Objects: 
+                </li>
+                <li> 
+                    <img src="assets/images/controls/left.png" alt="left key" class="controls">
+                    <img src="assets/images/controls/right.png" alt="right key" class="controls">
+                    Move: 
+                </li>
+            </ul>
+    
+            <hr>
+            <ul class="list-instructions">
+                <li>You have a total of 3 lives.</li>
+                <li>Each time an enemy attacks you, you lose 1 life.</li>
+                <li>Poison potions and Devil Snare will kill you instantly.</li>
+            </ul>
+    
+            <hr>
+            <p>Stay alive and collect the 3 Deathly Hallows to win. <br>
+            To obtain the Elder Wand, which is in Voldemort's possession, you will have to face him in a final duel.</p>
+            
+            <hr>
+            <ul class="list-instructions">
+                <li>Chocolate Frogs allow you to recover 1 life.</li>
+                <li>The Golden Snitch grants you an extra 100 points when collected.</li>
+                <li>Defeating each enemy will earn you an extra 200 points.</li>
+            </ul>
+    
+            <button class="close-bt screen-style-bt">Close</button>
+        </div>
+    
+        <!--House Test-->
+        <div id ="house-test" class="screen hidden">
+            <h2>Which Trait Defines Your Wizarding Soul?</h2>
+            <button id="bravery" class="bt-options">
+                Bravery
+                <img class="select-icon" src="assets/images/menu/gryffindor.png" alt="gryffindor">
+            </button>
+            <button id="loyalty" class="bt-options">
+                Loyalty
+                <img class="select-icon" src="assets/images/menu/hufflepuff.png" alt="hufflepuff">
+            </button>
+            <button id="intelligence" class="bt-options">
+                Intelligence
+                <img class="select-icon" src="assets/images/menu/ravenclaw.png" alt="ravenclaw">
+            </button>
+            <button id="ambition" class="bt-options">
+                Ambition
+                <img class="select-icon" src="assets/images/menu/slytherin.png" alt="slytherin">
+            </button>
+    
+            <button class="close-bt screen-style-bt"> Close </button>
+        </div>
+
+        <!--Scores-->
+        <div id ="scores" class="screen hidden">
+            <ul id="scores-list"></ul>
+            <button class="close-bt screen-style-bt">Close</button>
+        </div>
+    
+        <!--Game-->
+        <div id="game-container">
+            <canvas id="canvas-game" class="hidden"></canvas>
+            <!-- <div id="open-door" class="open-door hidden">
+                <p>Choose the correct spell to open the door:</p>
+                <ul>
+                    <button id="expelliarmus">Expelliarmus</button>
+                    <button id="alohomora">Alohomora</button>
+                    <button id="lumos">Lumos</button>
+                    <button id="expecto">Expecto Patronum</button>
+                </ul>
+            </div> -->
+
+            <!--Input Name and Restart and Exit options-->
+            <div id = "result" class="hidden">
+                <label class="ask-name" for="playername">Enter your name: </label><br>
+                <input type="text" id="playername" name="playername" placeholder="Your name..." class="playername"><br>
+                <button id="enter-bt" class="screen-style-bt enter-bt"> Enter </button>
+                <div id="end-options" class="end-options">
+                    <button id="restart" class="screen-style-bt end-bt"> Play Again! </button>
+                    <button id="exit" class="screen-style-bt end-bt"> Exit </button>
+            </div>
+            
+        </div>    
+     </div>
+    
+     <!--Javascript files-->
+    <script src="assets/js/constants.js"></script>
+    <script src="assets/js/models/background.js"></script>
+    <script src="assets/js/models/player.js"></script>
+    <script src="assets/js/models/enemies/enemy.js"></script>
+    <script src="assets/js/models/magicitems/magicitem.js"></script>
+    <script src="assets/js/models/magicitems/chocolatefrog.js"></script>
+    <script src="assets/js/models/magicitems/goldensnitch.js"></script>
+    <script src="assets/js/models/enemies/voldemort.js"></script>
+    <script src="assets/js/models/magicitems/deathlyhallows/elderwand.js"></script>
+    <script src="assets/js/models/magicitems/deathlyhallows/invisibilitycloak.js"></script>
+    <script src="assets/js/models/magicitems/deathlyhallows/resurrectionstone.js"></script>
+    <script src="assets/js/models/spell.js"></script>
+    <script src="assets/js/models/finalBattle.js"></script>
+    <script src="assets/js/models/game.js"></script>
+    <script src="assets/js/index.js"></script>
+</body>
+</html>

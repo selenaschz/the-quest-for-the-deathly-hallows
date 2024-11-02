@@ -1,0 +1,218 @@
+@import url('https://fonts.cdnfonts.com/css/harry-potter');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Roboto+Slab:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Roboto+Slab:wght@100..900&display=swap');
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    width: 100%;
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    background-image: url("../images/background-body.png");
+    background-size: cover;
+}
+
+/*--Main Menu--*/
+h1 {
+    padding: 0;
+    margin: 0;
+    font-family: 'Harry Potter', sans-serif;
+    color: #b39161;
+    text-shadow: 2px 2px 0 #000937;
+    letter-spacing: 1.5px;
+    text-align: center;        
+}
+
+.menu, .screen {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    margin-bottom: auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 1000px;
+    height: 533px;
+    border: 2px solid #000;
+    background-image: url("../images/menu/background-menu.png");
+    background-size: cover;
+}
+
+#menu-options {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 300px;
+    padding-left: 1rem;
+}
+
+.bt-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 15rem;
+    height: 1.7rem;
+    font: bold 1rem 'Cinzel', sans-serif;
+    color: #000937;
+    margin-bottom: 0.5rem;
+    background-color: #b39161;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding-left: 0.5rem;
+}
+
+.select-icon {
+    width: 2.5rem;
+    visibility: hidden;
+    padding-left: 2rem;
+}
+
+/*Change h1 color*/
+.navy-blue {
+    color: #000937;
+    text-shadow: 2px 2px 0 #b39161;
+}
+
+/*On hover, change background and font color*/
+.bt-options:hover {
+    background-color: #000937;
+    color: #b39161;
+}
+
+/*On hover, show icons*/
+.bt-options:hover .select-icon {
+    visibility: visible;
+}
+
+.hidden {
+    display: none;
+}
+
+/*--Instructions and Story*/
+.controls {
+    width: 1rem;
+}
+
+.space {
+    width: 2.5rem;
+}
+
+
+.screen {
+    background-image: url("../images/menu/background-screen.png");
+}
+
+p, h2, .list-instructions, h3 {
+    width: 500px;
+    margin-left: 50px;
+    font: 0.8rem 'Lora', sans-serif;
+}
+
+.list-instructions {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    list-style-type: none;
+    padding: 0;
+    margin-top: 7px;
+}
+
+.list-instructions li {
+    margin: 0 15px;
+    text-align : center;
+}
+
+hr {
+    border: none;
+    height: 2px;
+    background-color: #0c1336;
+    width: 50%;
+    align-self: center;
+    margin-left: 280px;
+}
+
+h2 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background-color: #0c1336;
+    color: #b39161;
+    width: 180px;
+    height: 50px;
+    align-content: center;
+    font: 1.3rem 'Harry Potter', sans-serif;
+    border-radius: 15px;
+}
+
+.screen-style-bt  {
+    background-color: #000937;
+    font: bold 0.8rem 'Cinzel', sans-serif;
+    margin-left: 50px;
+    margin-top:10px;
+    color: #b39161;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+}
+
+/*House Test*/
+#house-test h2{
+    width: 450px;
+}
+
+.enter-bt {
+    margin: 10px 0;
+}
+
+.end-options {
+    display: flex;
+    justify-content: space-around;
+    bottom: 20px;
+}
+
+.end-bt {
+    margin-left:20px;
+}
+
+.screen-style-bt:hover {
+    background-color: #b39161;
+    color: #0c1336;
+}
+
+/*Game over*/
+.game-over, .win {
+    width: 1000px;
+    height: 533px;
+    padding-top: 30px;
+}
+
+/*Win*/
+.win {
+    background-image: url("../images/win.png");
+}
+
+.game-over {
+    background-image: url("../images/game-over.png");
+}
+
+.game-over, .playername {
+    font: bold 1.5rem 'Harry Potter', sans-serif;
+    text-align: center;
+    color:#b39161;
+    background-color: #c2ae91;
+}
+
+.playername {
+    color:#000937;
+    width: 250px;
+}
+
+
+
+
