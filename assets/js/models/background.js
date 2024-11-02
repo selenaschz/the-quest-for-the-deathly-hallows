@@ -28,4 +28,9 @@ class Background {
             this.x = 0;
         } 
     }
+
+    //--Change image--
+    setImage(type) {
+        this.bgImg.src = `assets/images/${type}.jpg`;
+    }
 }

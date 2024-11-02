@@ -24,6 +24,8 @@ class Game {
         this.enemies = [new Enemy( this.ctx, "dementor" )];
 
         this.enemyTypes = ["dementor", "troll", "pixies"];
+        //Add enemies every 300 ticks:
+        this.enemyAddTimer = 300;
 
         //Score:
         this.score = 0;
@@ -74,7 +76,7 @@ class Game {
                 tick++;
 
                 //Add an enemy every 300 ticks:
-                if ( tick >= 300 ) {
+                if ( tick >= this.enemyAddTimer ) {
                     tick = 0;
                     this.addEnemy();
                 }
@@ -155,7 +157,8 @@ class Game {
         this.drawIntervalId = null;
 
         this.score = 0; 
-        this.level = 1; 
+        this.level = 1;
+        this.background.setImage("background"); 
         this.elapsedTime = 0; 
         this.player = new Player (this.ctx, this.house);
         this.enemies = [new Enemy(this.ctx, "dementor")];
@@ -261,7 +264,7 @@ class Game {
         this.imgDeathlyHallows.src = `assets/images/game/${this.deathlyHallowsImgStatus}Collected.png`;
         this.ctx.drawImage(
             this.imgDeathlyHallows,
-            this.ctx.canvas.width - this.imgDeathlyHallows.width / 2 -10,
+            this.ctx.canvas.width - this.imgDeathlyHallows.width / 2 -20,
             10,
             this.imgDeathlyHallows.width / 2,
             this.imgDeathlyHallows.height / 2
@@ -326,12 +329,13 @@ class Game {
                     switch ( deathlyHallow.name ) {
                         case "Resurrection Stone":
                             this.deathlyHallowsImgStatus = "one";
-                            this.levelUp();
-                            this.playFinalBattle();
+                            console.log("ha cogido la pidra")
+                            this.changeLevel();
                             break;
                         case "Invisibility Cloak":
                             this.deathlyHallowsImgStatus = "two";
                             this.levelUp();
+                            this.playFinalBattle();
                             break;
                         case "Elder Wand":
                             this.deathlyHallowsImgStatus = "three";
@@ -388,6 +392,23 @@ class Game {
     levelUp() {
         this.level++;
         this.elapsedTime = 0;
+    }
+
+    setImage(src) {
+        this.background.src = src;
+    }
+
+    changeLevel() {
+        if ( this.level === 1 ) {
+            //Add an enemy every 200 ticks:
+            console.log("cambia de nivel")
+            this.levelUp();
+            this.player.x = 20;
+            this.music.currentTime = 0;
+            this.music.play();
+            this.enemyAddTimer = 200;
+            this.background.setImage("background-level2");
+        } 
     }
 
     //--Start the final Battle--
