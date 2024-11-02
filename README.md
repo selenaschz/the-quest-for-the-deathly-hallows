@@ -1,7 +1,7 @@
 # Hogwarts: The Quest for the Deathly Hallows
 
 - Developed in **JavaScript, HTML, and CSS** using Canvas.
-- Demo: https://selenaschz.github.io/deathlyhallows-quest/index.html
+- Demo: https://selenaschz.github.io/the-quest-for-the-deathly-hallows/
 
 ## Game Features
 
