@@ -114,7 +114,7 @@ window.addEventListener("load", () => {
         if ( scoresGame.length > 0 ) {
             scoresGame.forEach( score => {
                 const li = document.createElement("li");
-                li.textContent = `${score.name}: ${score.points} points`; //Add the player name and their score
+                li.textContent = `${score.isWinner ? "VICTORY" : "DEFEAT"} --> ${score.name}: ${score.points} points`; //Add the player name and their score
                 scoresList.appendChild(li);
             });
         } else {

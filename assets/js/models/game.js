@@ -16,6 +16,13 @@ class Game {
         //Hogwarts house:
         this.house = house,
 
+        this.imgHealth = new Image();
+        this.imgHealth.src = `assets/images/menu/${this.house}.png`;
+        this.xImgHealth = 20;
+        this.yImgHealth = 10;
+        this.widthImgHealth = 30;
+        this.heightImgHealth = 30;
+
         this.background = new Background(this.ctx, "background");
 
         //Characters:
@@ -29,6 +36,9 @@ class Game {
 
         //Score:
         this.score = 0;
+        this.imgScore = new Image();
+        this.imgScore.src = `/assets/images/points.webp`;
+        
 
         //Level:
         this.level = 1;
@@ -43,11 +53,19 @@ class Game {
         this.deathlyHallowsImgStatus = "not";
         this.imgDeathlyHallows = new Image();
 
+        //Game status:
         this.started = false;
+        this.paused = false;
+        this.muted = false;
+        this.imgPause = new Image();
+        this.imgPause.src = "/assets/images/game/pause.webp"
+        this.imgMute = new Image();
+        this.imgMute.src = "/assets/images/game/mute.webp"
+        this.imgPlay = new Image();
+        this.imgPlay.src = "/assets/images/game/play.webp"
 
         this.music = new Audio("assets/audio/background-theme.mp3");
         this.music.volume = 0.03;
-        //PONER MUTE Y PAUSE!!!
 
         //Final Battle:
         this.finalBattle = new FinalBattle(this.ctx, this);
@@ -61,6 +79,7 @@ class Game {
         this.started = true;
 
         this.music.play();
+        this.pause();
 
         //Counter to add enemies:
         let tick = 0;
@@ -69,21 +88,23 @@ class Game {
 
         if (!this.drawIntervalId) {
             this.drawIntervalId = setInterval(() => {
-                this.clear();
-                this.move();
-                this.draw();
+                if ( !this.paused ) {
+                    this.clear();
+                    this.move();
+                    this.draw();
 
-                tick++;
+                    tick++;
 
-                //Add an enemy every 300 ticks:
-                if ( tick >= this.enemyAddTimer ) {
-                    tick = 0;
-                    this.addEnemy();
+                    //Add an enemy every 300 ticks:
+                    if ( tick >= this.enemyAddTimer ) {
+                        tick = 0;
+                        this.addEnemy();
+                    }
                 }
+                
             }, this.fps)
         }
     }
-
 
     //--Win or Game over:--
     setEndScreen(result) {
@@ -160,14 +181,20 @@ class Game {
         this.level = 1;
         this.background.setImage("background"); 
         this.elapsedTime = 0; 
+        this.enemyAddTimer = 300;
         this.player = new Player (this.ctx, this.house);
         this.enemies = [new Enemy(this.ctx, "dementor")];
         this.music.currentTime = 0;
         this.resultSound = false;
-        this.finalBattle.stop();
+        this.finalBattle.restartSettings();
         this.elderWand.isCollected = false;
         this.resurrectionStone.isCollected = false;
         this.invisibilityCloak.isCollected = false;
+
+        //Remove .game-over or .win class
+        const resultDiv = document.getElementById("result");
+        resultDiv.classList.remove("game-over");
+        resultDiv.classList.remove("win");
 
     }
 
@@ -198,7 +225,8 @@ class Game {
     addScore(playerName) {
         const score = {
             name: playerName,
-            points: this.score
+            points: this.score,
+            isWinner: this.finalBattle.isWin
         };
 
         // Get existing scores
@@ -245,8 +273,8 @@ class Game {
         }
 
         //Style font:
-        this.ctx.font = "20px serif";
-        this.ctx.fillStyle = "white";
+        this.ctx.font = "30px 'Harry potter', serif";
+        this.ctx.fillStyle = "#b39161";
 
         //Level:
         this.ctx.fillText(`Level: ${this.level}`, this.ctx.canvas.width / 2, 30)
@@ -254,17 +282,30 @@ class Game {
         //Time:
         this.ctx.fillText(`Time: ${this.elapsedTime}`, 10, this.ctx.canvas.height - 20)
 
-        //Health player:
-        this.ctx.fillText(`Health: ${this.player.health}`, 20, 30)
+        //Health player. Draw the number of lifes:
+        for ( let i = 0; i < this.player.health; i++) {
+            this.ctx.drawImage(
+                this.imgHealth,
+                this.xImgHealth + (i * this.widthImgHealth),
+                this.yImgHealth,
+                this.widthImgHealth,
+                this.heightImgHealth);
+        };
+        // this.ctx.fillText(`Health: ${this.player.health}`, 20, 30)
 
         //Score:
-        this.ctx.fillText(`Score: ${this.score}`, this.ctx.canvas.width / 4 * 3, 30);
+        this.ctx.drawImage(this.imgScore, this.ctx.canvas.width / 4 * 3, 10, 30, 30);
+        this.ctx.fillText(`${this.score}`, this.ctx.canvas.width / 4 * 3 + 30, 35);
+
+        //Play, mute, or pause:
+        this.ctx.drawImage(this.paused ? this.imgPlay : this.imgPause, this.ctx.canvas.width - 70, this.ctx.canvas.height - 40);
+        this.ctx.drawImage(this.imgMute, this.ctx.canvas.width - 40, this.ctx.canvas.height - 40);
 
         //Deathly Hallows Collected:
         this.imgDeathlyHallows.src = `assets/images/game/${this.deathlyHallowsImgStatus}Collected.png`;
         this.ctx.drawImage(
             this.imgDeathlyHallows,
-            this.ctx.canvas.width - this.imgDeathlyHallows.width / 2 -20,
+            this.ctx.canvas.width - this.imgDeathlyHallows.width / 2 -40,
             10,
             this.imgDeathlyHallows.width / 2,
             this.imgDeathlyHallows.height / 2
@@ -293,6 +334,25 @@ class Game {
         //Remove dead enemies
         this.enemies = this.enemies.filter( enemy => enemy.isAlive || enemy.opacity > 0.7 );
     }
+
+    //--Pause the game--
+    pause() {
+        this.imgPause.addEventListener("click", () => {
+            this.music.pause();
+            clearInterval(this.timeInterval);
+            this.paused = true;
+        }
+        )
+    }
+
+    // checkClickCanvas(event) {
+    //     //Get the canvas position and size:
+    //     const react = this.canvas.getBoundingClientRect();
+    //     //Mouse pointer x position - canvas left:
+    //     const x = event.clientX - r.left;
+    //     //Mouse pointer Y position - canvas top:
+    //     const y = event.clientY - r.top;
+    // };
 
     //--Enemies collisions:--
     checkCollisionsEnemy() {
@@ -324,23 +384,17 @@ class Game {
     //--Item collisions--:
     checkCollisionsItem() {
         this.deathlyHallows.forEach( deathlyHallow => {
-            if ( this.player.collides ( deathlyHallow ) ) {
-                if ( this.player.collectDeathlyHallow( deathlyHallow ) ) {
-                    switch ( deathlyHallow.name ) {
-                        case "Resurrection Stone":
-                            this.deathlyHallowsImgStatus = "one";
-                            console.log("ha cogido la pidra")
-                            this.changeLevel();
-                            break;
-                        case "Invisibility Cloak":
-                            this.deathlyHallowsImgStatus = "two";
-                            this.levelUp();
-                            this.playFinalBattle();
-                            break;
-                        case "Elder Wand":
-                            this.deathlyHallowsImgStatus = "three";
-                            break;
-                    }
+            if ( this.player.collectDeathlyHallow( deathlyHallow) ) {
+                switch ( deathlyHallow.name ) {
+                    case "Resurrection Stone":
+                        this.deathlyHallowsImgStatus = "one";
+                        this.changeLevel();
+                        break;
+                    case "Invisibility Cloak":
+                        this.deathlyHallowsImgStatus = "two";
+                        this.levelUp();
+                        this.playFinalBattle();
+                        break;
                 }
             }
         })
@@ -419,5 +473,6 @@ class Game {
 
         //Start the final battle game
         this.finalBattle.start();
+        this.finalBattle.move();
     }
 }

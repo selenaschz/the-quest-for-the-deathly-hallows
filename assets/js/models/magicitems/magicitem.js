@@ -2,7 +2,7 @@ class MagicItem {
     constructor(ctx, name) {
         this.ctx = ctx;
 
-        this.x = Math.floor(Math.random() * (this.ctx.canvas.width - 50));
+        this.x = Math.floor(Math.random() * (this.ctx.canvas.width - 100));
         this.y = this.ctx.canvas.height - 100;
 
         //Type of item:
@@ -25,6 +25,9 @@ class MagicItem {
             this.width = this.image.width;
             this.height = this.image.height;
          }
+
+        this.audio = new Audio("assets/audio/item.mp3")
+        this.playedAudio = false;
     }
 
     draw() {

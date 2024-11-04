@@ -265,7 +265,7 @@ class Player {
 
     //--Collect a Deathly Hallow--
     collectDeathlyHallow(deathlyHallow) {
-        if ( this.actions.collect ) {
+        if ( this.actions.collect && this.collides(deathlyHallow)) {
             if ( !deathlyHallow.isCollected ) {
                 deathlyHallow.isCollected = true;
                 return true;

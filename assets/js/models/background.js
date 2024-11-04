@@ -11,14 +11,21 @@ class Background {
 
         this.bgImg = new Image();
         this.bgImg.src = `assets/images/${type}.jpg`;
-        this.bgImg.width = this.width;
-        this.bgImg.height = this.height;
-        
+
+        this.isLoaded = false;
+
+        this.bgImg.onload = () => {
+            this.isLoaded = true;
+            this.bgImg.width = this.width;
+            this.bgImg.height = this.height;
+        }
     }
 
     draw() {
-        this.ctx.drawImage(this.bgImg, this.x, this.y, this.bgImg.width, this.bgImg.height);
-        this.ctx.drawImage(this.bgImg, this.x + this.width, this.y, this.bgImg.width, this.bgImg.height);
+        if( this.isLoaded ) {
+            this.ctx.drawImage(this.bgImg, this.x, this.y, this.bgImg.width, this.bgImg.height);
+            this.ctx.drawImage(this.bgImg, this.x + this.width, this.y, this.bgImg.width, this.bgImg.height);
+        }
     }
 
     move() {

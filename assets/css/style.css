@@ -185,8 +185,8 @@ h2 {
     color: #0c1336;
 }
 
-/*Game over*/
-.game-over, .win {
+/*Game result: Game over or win*/
+.result {
     width: 1000px;
     height: 533px;
     padding-top: 30px;
@@ -201,7 +201,7 @@ h2 {
     background-image: url("../images/game-over.png");
 }
 
-.game-over, .playername {
+.result, .playername {
     font: bold 1.5rem 'Harry Potter', sans-serif;
     text-align: center;
     color:#b39161;
@@ -212,7 +212,6 @@ h2 {
     color:#000937;
     width: 250px;
 }
-
 
 
 

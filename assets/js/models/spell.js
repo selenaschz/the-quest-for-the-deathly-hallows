@@ -28,6 +28,7 @@ class Spell {
         this.drawCount = 0;
 
         this.sprite.onload = () => {
+            this.isLoaded = true;
             this.sprite.frameWidth = Math.floor(this.sprite.width / this.sprite.frames);
             this.height = this.sprite.height;
             this.width = this.sprite.frameWidth;
@@ -52,17 +53,20 @@ class Spell {
     draw() {
         this.updateAnimation();
         
-        this.ctx.drawImage(
-            this.sprite,
-            this.sprite.frameIndex * this.width,
-            0,
-            this.sprite.width,
-            this.sprite.height,
-            this.x,
-            this.y,
-            this.width,
-            this.height
-        );
+        if ( this.isLoaded ) {
+            this.ctx.drawImage(
+                this.sprite,
+                this.sprite.frameIndex * this.width,
+                0,
+                this.width,
+                this.height,
+                this.x,
+                this.y,
+                this.width,
+                this.height
+            );
+        }
+        
     }
 
     //--Play spell sound--
@@ -92,3 +96,4 @@ class Spell {
         return collisionX && collisionY && enemy.isAlive;
     }
 }
+    

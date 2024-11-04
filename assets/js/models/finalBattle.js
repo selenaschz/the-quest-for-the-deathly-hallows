@@ -3,21 +3,38 @@ class FinalBattle {
         this.ctx = ctx;
         this.game = game;
 
+        //Img of the player in battle:
+        this.playerImg = new Image();
+        this.playerImg.src = "assets/images/player/playerBattle.png"
+        this.playerImg.onload = () => {
+            this.isLoaded = true;
+        }
+
         //Player:
         this.player = new Player(this.ctx, this.game.player.house);
         this.player.x = this.ctx.canvas.width / 4;
         this.player.y = this.ctx.canvas.height - 200;
-        this.player.spell = new Spell(this.ctx, this.player.x + this.player.width, this.player.y, true, this.player.house);
-        this.player.spell.isActive = true; //Activate spell of the player
 
+        //Voldemort
         this.voldemort = new Voldemort(this.ctx);
+
         this.started = false;
         this.drawInterval = undefined;
         this.background = new Background (this.ctx, "finalBattle");
 
+        //Spells:
+        this.xSpellPlayer = this.player.x + 112;
+        this.spellPlayer = new Spell(this.ctx, this.xSpellPlayer, this.player.y, true, this.player.house)
+        this.xSpellVoldemort = this.voldemort.x - 55;
+        this.spellVoldemort = new Spell(this.ctx, this.xSpellVoldemort, this.voldemort.y, false, "slytherin");
+        this.spellPlayer.width = 300;
+
         //The player has won or not:
         this.isWin = false;
         this.isGameOver = false;
+
+        //Elder wand:
+        this.elderWand = new ElderWand(this.ctx);
 
         //Spell phrases:
         this.spells = [
@@ -55,37 +72,40 @@ class FinalBattle {
         this.randomSpellPhrase = "";
         this.indexChar = 0;
 
-        //Maxime to type the random spell:
-        this.maxTimeToType = 5;
+        //Max time to type the random spell:
+        this.maxTimeToType = 7;
         //Elapsed time:
         this.elapsedTime = 0;
+        this.timeInterval = undefined;
 
         //Store what the player has written:
         this.typedSpell = "";
         //Correctly written spell phrases:
         this.correctSpells = 0;
-        //The player have to type 6 spells correctly to win:
-        this.spellsToWin = 6;
-
-        //Disable player actions:
-        this.player.actionsEnabled= false;
-        
+        //The player have to type 3 spells correctly to win:
+        this.spellsToWin = 3;
     }
 
     //Start the final battle:
     start() {
         this.started = true;
 
-        this.getRandomSpellPhrase();
-
-        this.onKeyPress();
+        //Start timer:
+        if ( this.voldemort.isAlive ) {
+            this.getRandomSpellPhrase();
+            this.updateElapsedTime();
+            this.onKeyPress();
+            
+        } else {
+            this.onKeyEventPlayer();
+        }
 
         //Final battle Interval:
         if (!this.drawInterval) {
             this.drawInterval = setInterval(() => {
                 this.clear();
                 this.draw();
-                
+                this.move();
             }, this.fps);
         }
 
@@ -95,14 +115,28 @@ class FinalBattle {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     }
 
+    move() {
+        this.spellPlayer.audio.pause();
+        this.spellVoldemort.audio.pause();
+        if ( this.correctSpells == this.spellsToWin && this.voldemort.isAlive ) {
+            this.spellPlayer.move();
+        }
+        this.killVoldemort();
+
+        if ( !this.voldemort.isAlive ) {
+            this.elderWand.move();
+            this.player.move();
+        }
+    }
+
     draw() {
         this.background.draw();
-        this.player.draw();
-        this.player.spell.draw();
-        // this.voldemort.draw();
+
+        this.drawFinalBattle();
+        
         this.ctx.fillStyle = "white";
         this.ctx.textAlign = "center";
-        this.ctx.font = "50px serif";
+        this.ctx.font = "50px 'Harry Potter'";
 
         //Level:
         this.ctx.fillText(`Level: ${this.game.level}`, this.ctx.canvas.width / 2, 30)
@@ -123,15 +157,41 @@ class FinalBattle {
         this.ctx.textAlign = "start";
         //Spell:
         const spellWidth = this.ctx.measureText(this.randomSpellPhrase).width; //Calculate the width of a Spell phrase
-        this.ctx.fillText(this.randomSpellPhrase, this.ctx.canvas.width / 2 - spellWidth / 2, this.ctx.canvas.height / 2);
 
-        //Change color char when it type
-        this.ctx.fillStyle = "red";
-        this.ctx.fillText(this.typedSpell, this.ctx.canvas.width / 2 - spellWidth / 2, this.ctx.canvas.height / 2);
+        if ( this.voldemort.isAlive) {
+            this.ctx.fillText(this.randomSpellPhrase, this.ctx.canvas.width / 2 - spellWidth / 2, this.ctx.canvas.height / 2);
+
+            //Change color char when it type
+            this.ctx.fillStyle = "#b39161";
+            this.ctx.fillText(this.typedSpell, this.ctx.canvas.width / 2 - spellWidth / 2, this.ctx.canvas.height / 2);
+        }
 
         this.gameOver();
         this.win();        
     }
+
+    drawFinalBattle() {
+        if ( this.correctSpells !== this.spellsToWin ) {
+            this.voldemort.draw();
+            this.spellVoldemort.draw();
+            if ( this.isLoaded ) {
+                this.ctx.drawImage(
+                    this.playerImg,
+                    this.player.x,
+                    this.ctx.canvas.height - 205
+                 )
+            }
+        } else {
+            this.player.draw();
+            this.elderWand.draw();
+        }
+
+        if ( this.voldemort.isAlive ) {
+            this.spellPlayer.draw();
+        }
+    }
+
+
 
     //Get random 
     getRandomSpellPhrase() {
@@ -140,9 +200,6 @@ class FinalBattle {
 
         //Get random spell phrase from the array:
         this.randomSpellPhrase = this.spells[ randomIndex ];
-
-        //Start timer:
-        this.updateElapsedTime();
 
         //Remove that spell from the array:
         this.spells = this.spells.filter( spell => spell !== this.randomSpellPhrase );
@@ -154,38 +211,80 @@ class FinalBattle {
             this.stopElapsedTime();
             
             this.isGameOver = true;
+            this.stop();
+            this.started = false;
             this.game.gameOver();
             this.game.setEndScreen("game-over");
-            this.stop();
-            this.game.restartSettings();
         } 
     }
 
-    //Elapsed time:
+    restartSettings() {
+        this.elderWand.audio.pause();
+        clearInterval(this.timeInterval);
+        clearInterval(this.drawInterval);
+        this.clear();
+        this.stopElapsedTime();
+        this.stop();
+        this.timeInterval = undefined;
+        this.drawInterval = undefined;
+        this.elapsedTime = 0;
+        this.elderWand.isCollected = false;
+        this.started = false;
+        this.isGameOver = false;
+        this.isWin = false;
+        this.voldemort.isAlive = true;
+    }
+
+    //--Update Elapsed time:--
     updateElapsedTime() {
-        this.interval = setInterval(() => {
-            this.elapsedTime++;
+        this.timeInterval = setInterval(() => {
+            this.elapsedTime +=1;
         }, 1000);
     }
 
     stopElapsedTime (){
-        clearInterval(this.interval);
+        clearInterval(this.timeInterval);
     }
 
-    win() {
-        if ( this.correctSpells === this.spellsToWin && !this.isWin ) {
-            this.stopElapsedTime();
-            this.isWin = true;
-            
-            this.game.win();
-            this.game.setEndScreen("win");
-            this.stop();
-            this.game.restartSettings();
+    showElderWand() {
+        if ( this.correctSpells === this.spellsToWin ) {
+            this.game.deathlyHallows[2].draw();
         }
     }
 
+    killVoldemort() {
+        if ( this.spellPlayer.collides(this.voldemort) ) {
+            this.voldemort.isAlive = false;
+            console.log(this.voldemort.isAlive)
+            this.elderWand.draw();
+            clearInterval(this.timeInterval);
+        }
+    }
+
+     win() {
+
+        if ( this.player.collides(this.elderWand) ) {
+            if ( !this.elderWand.playedAudio ) {
+                this.elderWand.audio.play();
+                this.elderWand.playedAudio = true;
+            }
+            this.elderWand.vx = 0;
+            //Changes the elder wand image to the 3 deathly hallows (because the player has already collected them all):
+            this.elderWand.image.src = "/assets/images/favicon.png" 
+            this.game.deathlyHallowsImgStatus = "three";
+            this.isCollected = true;
+            setTimeout(() => {
+                this.restartSettings();
+                this.game.win();
+                this.game.setEndScreen("win");
+                this.isWin = true;
+            }, 2000);
+        }
+     }
+
+    //New Event Listener (Typed Letters)
     onKeyPress() {
-        window.addEventListener("keydown", (event) => {
+        document.addEventListener("keydown", (event) => {
             //Store pressed letter:
             const pressedLetter = event.key.toUpperCase();
             //Get the first char from the random spell phrase:
@@ -200,11 +299,11 @@ class FinalBattle {
                     if ( this.indexChar === this.randomSpellPhrase.length ) {
                         this.correctSpells++; //Spell type correctly
                         this.elapsedTime = 0; //Reset the elapsed time
-                        this.increaseSpellPower(this.player);
                         this.getRandomSpellPhrase(); //New spell phrase
-                         //Reset typed spell and indexChar:
+                         //Reset typed spell, indexChar and elapsedTime:
                         this.typedSpell = "";
                         this.indexChar = 0;
+                        console.log("palabra correcta")
                     }
                 
             }
@@ -212,16 +311,22 @@ class FinalBattle {
         })
     }
 
-    //Increase the power of spell:
-    increaseSpellPower(character){
-        character.spell.width += 10;
+    //Event listener player (Player movements)
+    onKeyEventPlayer() {
+        document.addEventListener("keydown", event => {
+            this.player.onKeyEvent(event);
+        } );
+    
+        document.addEventListener("keyup", event => {
+            this.player.onKeyEvent(event);
+        })
     }
 
     //Stop the final battle:
     stop() {
         this.started = false;
         clearInterval(this.drawInterval);
-        clearInterval(this.interval);
+        clearInterval(this.timeInterval);
     }
 
 }
