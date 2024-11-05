@@ -1,17 +1,14 @@
 class ChocolateFrog extends MagicItem {
     constructor(ctx) {
         super(ctx, "Chocolate Frog");
+        this.x = Math.floor(Math.random() * (this.ctx.canvas.width - 100));
     }
 
-    //Change the frog's image to an image of a life.
-    // setHouseImg(house) {
-    //     if ( this.isCollected ) {
-    //         this.imgCollect.src = `assets/images/menu/${house}.png`
-
-    //         this.image.onload = () => {
-    //             this.width = 20;
-    //             this.height = 20;
-    //         }
-    //     }
-    // }
+    giveLife(player) {
+        if (player.health < 3 ) {
+            player.health++;
+            this.isCollected = true; 
+        }
+    }
+    
 }

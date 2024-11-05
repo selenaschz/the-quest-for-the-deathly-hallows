@@ -20,6 +20,7 @@ class Spell {
         this.audio.volume = 0.12;
 
         this.sprite = new Image();
+        this.isLoaded = false;
         this.sprite.src = `assets/images/spell/spell-${house}.png`;
         
         this.sprite.frameIndex = 0;

@@ -55,7 +55,7 @@
         <!--Instructions-->
         <div id="instructions" class="screen hidden">
             <h2>Game Instructions</h2>
-            <ul class="list-instructions">
+            <ul class="list-instructions controls-game">
                 <li>
                     <img src="assets/images/controls/up.png" alt="up key" class="controls">
                     Jump: 
@@ -79,7 +79,7 @@
             <ul class="list-instructions">
                 <li>You have a total of 3 lives.</li>
                 <li>Each time an enemy attacks you, you lose 1 life.</li>
-                <li>Poison potions and Devil Snare will kill you instantly.</li>
+                <li>Chocolate Frogs allow you to recover 1 life.</li>
             </ul>
     
             <hr>
@@ -87,10 +87,10 @@
             To obtain the Elder Wand, which is in Voldemort's possession, you will have to face him in a final duel.</p>
             
             <hr>
+            <h3>Defeating each enemy will earn you points: </h3>
             <ul class="list-instructions">
-                <li>Chocolate Frogs allow you to recover 1 life.</li>
-                <li>The Golden Snitch grants you an extra 100 points when collected.</li>
-                <li>Defeating each enemy will earn you an extra 200 points.</li>
+                <li>Trolls award 100 points.</li>
+                <li>Dementors and Pixies award 200 points.</li>
             </ul>
     
             <button class="close-bt screen-style-bt">Close</button>
@@ -121,7 +121,7 @@
 
         <!--Scores-->
         <div id ="scores" class="screen hidden">
-            <ul id="scores-list"></ul>
+            <ul id="scores-list" class="scores-list"></ul>
             <button class="close-bt screen-style-bt">Close</button>
         </div>
     
@@ -159,7 +159,7 @@
     <script src="assets/js/models/enemies/enemy.js"></script>
     <script src="assets/js/models/magicitems/magicitem.js"></script>
     <script src="assets/js/models/magicitems/chocolatefrog.js"></script>
-    <script src="assets/js/models/magicitems/goldensnitch.js"></script>
+    <script src="/assets/js/models//point.js"></script>
     <script src="assets/js/models/enemies/voldemort.js"></script>
     <script src="assets/js/models/magicitems/deathlyhallows/elderwand.js"></script>
     <script src="assets/js/models/magicitems/deathlyhallows/invisibilitycloak.js"></script>

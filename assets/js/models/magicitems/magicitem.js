@@ -2,7 +2,7 @@ class MagicItem {
     constructor(ctx, name) {
         this.ctx = ctx;
 
-        this.x = Math.floor(Math.random() * (this.ctx.canvas.width - 100));
+        this.x = this.ctx.canvas.width - 100;
         this.y = this.ctx.canvas.height - 100;
 
         //Type of item:
@@ -21,7 +21,9 @@ class MagicItem {
         //Item is on the ground:
         this.isGround = true;
 
+        this.isLoaded = false;
          this.image.onload = () => {
+            this.isLoaded = true;
             this.width = this.image.width;
             this.height = this.image.height;
          }
@@ -31,7 +33,7 @@ class MagicItem {
     }
 
     draw() {
-        if( !this.isCollected ) {
+        if( !this.isCollected && this.isLoaded ) {
             this.ctx.drawImage(
                 this.image,
                 this.x,

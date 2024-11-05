@@ -25,11 +25,19 @@ class Background {
         if( this.isLoaded ) {
             this.ctx.drawImage(this.bgImg, this.x, this.y, this.bgImg.width, this.bgImg.height);
             this.ctx.drawImage(this.bgImg, this.x + this.width, this.y, this.bgImg.width, this.bgImg.height);
+            this.ctx.drawImage(this.bgImg, this.x - this.width, this.y, this.bgImg.width, this.bgImg.height);
         }
     }
 
-    move() {
-        this.x -= this.vx;
+    move(player) {
+
+        if ( player.actions.walk ) {
+            if ( player.isRight ) {
+                this.x -= this.vx;
+             } else if ( !player.isRight && player.x <= 0 ) {
+                 this.x += this.vx;
+             }
+        }
 
         if (this.x + this.width <= 0) {
             this.x = 0;

@@ -37,7 +37,7 @@ class Game {
         //Score:
         this.score = 0;
         this.imgScore = new Image();
-        this.imgScore.src = `/assets/images/points.webp`;
+        this.imgScore.src = `assets/images/points.webp`;
         
 
         //Level:
@@ -56,15 +56,8 @@ class Game {
         //Game status:
         this.started = false;
         this.paused = false;
-        this.muted = false;
-        this.imgPause = new Image();
-        this.imgPause.src = "/assets/images/game/pause.webp"
-        this.imgMute = new Image();
-        this.imgMute.src = "/assets/images/game/mute.webp"
-        this.imgPlay = new Image();
-        this.imgPlay.src = "/assets/images/game/play.webp"
 
-        this.music = new Audio("assets/audio/background-theme.mp3");
+        this.music = new Audio("assets/audio/levels/level1.mp3");
         this.music.volume = 0.03;
 
         //Final Battle:
@@ -72,6 +65,9 @@ class Game {
 
         //Result sound (if it is playing or not)
         this.resultSound = false;
+
+        this.chocolateFrog = new ChocolateFrog(this.ctx);
+        this.displayPoints = [];
     }
 
     //--Start game:--
@@ -79,7 +75,6 @@ class Game {
         this.started = true;
 
         this.music.play();
-        this.pause();
 
         //Counter to add enemies:
         let tick = 0;
@@ -190,6 +185,9 @@ class Game {
         this.elderWand.isCollected = false;
         this.resurrectionStone.isCollected = false;
         this.invisibilityCloak.isCollected = false;
+        this.music.src = "assets/audio/levels/level1.mp3";
+        this.chocolateFrog.isCollected = false;
+        this.chocolateFrog.isLifeVisible = false;
 
         //Remove .game-over or .win class
         const resultDiv = document.getElementById("result");
@@ -233,8 +231,13 @@ class Game {
         const scores = localStorage.getItem("scores") ? JSON.parse(localStorage.getItem("scores")) : [];
         scores.push(score);
 
+        //Sort the scores in descending order:
+        scores.sort((score1, score2) => score2.points - score1.points);
+        //Get the 5 best scores:
+        const top5 = scores.slice(0, 5);
+
         // Store scores in LocalStorage
-        localStorage.setItem("scores", JSON.stringify( scores ));
+        localStorage.setItem("scores", JSON.stringify( top5 ));
     }
 
     //--Player event listener:--
@@ -248,6 +251,10 @@ class Game {
         this.background.draw();
         this.player.draw();
 
+        if ( this.elapsedTime >= 10 && this.elapsedTime <= 15) {
+            this.chocolateFrog.draw();
+        }
+        
         //Image that informs that the player has to wait before casting another spell:
         if ( this.player.spell && this.player.spell.isActive ) {
             const loading = new Image();
@@ -267,8 +274,14 @@ class Game {
             this.player.spell.draw();
         }
 
+        //Get and draw points:
+        this.displayPoints = this.displayPoints.filter(point => {
+            point.draw();  
+            return point.show(); 
+        });
+
         //Draw the corresponding deathly hallow:
-        if ( this.timeLevel - this.elapsedTime <= 50) {
+        if ( this.timeLevel - this.elapsedTime <= 40) {
             this.deathlyHallows[this.level - 1].draw();
         }
 
@@ -277,7 +290,7 @@ class Game {
         this.ctx.fillStyle = "#b39161";
 
         //Level:
-        this.ctx.fillText(`Level: ${this.level}`, this.ctx.canvas.width / 2, 30)
+        this.ctx.fillText(`Level: ${this.level}`, this.ctx.canvas.width / 2 - 40, 30)
 
         //Time:
         this.ctx.fillText(`Time: ${this.elapsedTime}`, 10, this.ctx.canvas.height - 20)
@@ -291,15 +304,10 @@ class Game {
                 this.widthImgHealth,
                 this.heightImgHealth);
         };
-        // this.ctx.fillText(`Health: ${this.player.health}`, 20, 30)
 
         //Score:
         this.ctx.drawImage(this.imgScore, this.ctx.canvas.width / 4 * 3, 10, 30, 30);
         this.ctx.fillText(`${this.score}`, this.ctx.canvas.width / 4 * 3 + 30, 35);
-
-        //Play, mute, or pause:
-        this.ctx.drawImage(this.paused ? this.imgPlay : this.imgPause, this.ctx.canvas.width - 70, this.ctx.canvas.height - 40);
-        this.ctx.drawImage(this.imgMute, this.ctx.canvas.width - 40, this.ctx.canvas.height - 40);
 
         //Deathly Hallows Collected:
         this.imgDeathlyHallows.src = `assets/images/game/${this.deathlyHallowsImgStatus}Collected.png`;
@@ -319,40 +327,24 @@ class Game {
 
     //--Move:--
     move() {
-        this.background.move();
+        this.background.move(this.player);
         this.player.move();
+        this.chocolateFrog.move();
+
         this.enemies.forEach( enemy => {
             enemy.move(this.player);
         });
         this.deathlyHallows.forEach( deathlyHallow => deathlyHallow.move());
 
         //Check collisions:
+        this.checkCollisionsItem();
         this.checkCollisionsAttack();
         this.checkCollisionsEnemy();
-        this.checkCollisionsItem();
+        this.checkCollisionsDeathly();
 
         //Remove dead enemies
         this.enemies = this.enemies.filter( enemy => enemy.isAlive || enemy.opacity > 0.7 );
     }
-
-    //--Pause the game--
-    pause() {
-        this.imgPause.addEventListener("click", () => {
-            this.music.pause();
-            clearInterval(this.timeInterval);
-            this.paused = true;
-        }
-        )
-    }
-
-    // checkClickCanvas(event) {
-    //     //Get the canvas position and size:
-    //     const react = this.canvas.getBoundingClientRect();
-    //     //Mouse pointer x position - canvas left:
-    //     const x = event.clientX - r.left;
-    //     //Mouse pointer Y position - canvas top:
-    //     const y = event.clientY - r.top;
-    // };
 
     //--Enemies collisions:--
     checkCollisionsEnemy() {
@@ -373,16 +365,23 @@ class Game {
             //If there is a collision with spell, the enemy takes damage
             if (this.player.spell && this.player.spell.collides(enemy)) {
                 enemy.audio.pause();
+                let eX = enemy.x;
+                let eY = enemy.y;
                 enemy.takeDamage();
-                this.score += 200; //If the player kills an Enemy, get 200 points
+                let points = (enemy.type === "troll") ? 100 : 200;
+                this.score += points; //If the player kills an Enemy, get 200 points or 100 points if the enemy is Troll
+
+                const enemyPoint = new Point(this.ctx, enemy);
+                this.displayPoints.push(enemyPoint);
+                
                 return false; //Remove the enemy in the array
             }
             return true; // If there isn't a collision, keep it in the array
         });
     }
 
-    //--Item collisions--:
-    checkCollisionsItem() {
+    //--Deathly collisions--:
+    checkCollisionsDeathly() {
         this.deathlyHallows.forEach( deathlyHallow => {
             if ( this.player.collectDeathlyHallow( deathlyHallow) ) {
                 switch ( deathlyHallow.name ) {
@@ -398,6 +397,12 @@ class Game {
                 }
             }
         })
+    }
+
+    checkCollisionsItem() {
+        if (this.player.collides(this.chocolateFrog) ) {
+            this.player.collect(this.chocolateFrog);
+        }
     }
 
 
@@ -445,6 +450,9 @@ class Game {
     //--Level Up--
     levelUp() {
         this.level++;
+        this.music.pause();
+        this.enemies.forEach( e => e.audio.pause());
+        this.enemies = [];
         this.elapsedTime = 0;
     }
 
@@ -455,10 +463,10 @@ class Game {
     changeLevel() {
         if ( this.level === 1 ) {
             //Add an enemy every 200 ticks:
-            console.log("cambia de nivel")
             this.levelUp();
             this.player.x = 20;
             this.music.currentTime = 0;
+            this.music.src = "assets/audio/levels/level2.mp3";
             this.music.play();
             this.enemyAddTimer = 200;
             this.background.setImage("background-level2");

@@ -111,11 +111,14 @@ window.addEventListener("load", () => {
         //Get the localStorage:
         const scoresGame = localStorage.getItem("scores") ? JSON.parse(localStorage.getItem("scores")) : [];
     
+        let scoreCounter = 1;
         if ( scoresGame.length > 0 ) {
             scoresGame.forEach( score => {
                 const li = document.createElement("li");
-                li.textContent = `${score.isWinner ? "VICTORY" : "DEFEAT"} --> ${score.name}: ${score.points} points`; //Add the player name and their score
+                
+                li.textContent = `${scoreCounter} | ${score.isWinner ? "VICTORY" : "DEFEAT"} | ${score.name} | ${score.points} pts`; //Add the player name and their score
                 scoresList.appendChild(li);
+                scoreCounter++;
             });
         } else {
             const noScores = document.createElement("li");

@@ -4,7 +4,7 @@ class Enemy {
 
         this.type = type; //Enemy type
 
-        this.x = (this.type === "troll") ? 0 : this.ctx.canvas.width;
+        this.x = (this.type === "troll") ? -5 : this.ctx.canvas.width;
         this.y = (this.type === "dementor") ? 340 : 350;
 
         this.vx = 3; //Velocity
@@ -26,6 +26,7 @@ class Enemy {
 
         this.opacity = 1;
 
+        this.sprite.isLoaded = false;
         //If the sprite is loaded:
         this.sprite.onload = () => {
             this.sprite.isLoaded = true;

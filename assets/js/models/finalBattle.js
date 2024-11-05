@@ -84,12 +84,17 @@ class FinalBattle {
         this.correctSpells = 0;
         //The player have to type 3 spells correctly to win:
         this.spellsToWin = 3;
+
+        this.audio = new Audio("/assets/audio/levels/final-battle.mp3");
+        this.audio.volume = 0.05;
+        this.isMute = false;
     }
 
     //Start the final battle:
     start() {
         this.started = true;
 
+        this.audio.play();
         //Start timer:
         if ( this.voldemort.isAlive ) {
             this.getRandomSpellPhrase();
@@ -139,20 +144,13 @@ class FinalBattle {
         this.ctx.font = "50px 'Harry Potter'";
 
         //Level:
-        this.ctx.fillText(`Level: ${this.game.level}`, this.ctx.canvas.width / 2, 30)
+        this.ctx.fillText(`Level: ${this.game.level}`, this.ctx.canvas.width / 2 - 30, 60)
 
         //Time:
-        this.ctx.fillText(`Time: ${this.elapsedTime}`, 10, this.ctx.canvas.height - 20)
+        this.ctx.fillText(`Time: ${this.elapsedTime}`, 100, this.ctx.canvas.height - 40)
 
         //Deathly Hallows Collected:
         this.game.imgDeathlyHallows.src = `assets/images/game/${this.game.deathlyHallowsImgStatus}Collected.png`;
-        this.ctx.drawImage(
-            this.game.imgDeathlyHallows,
-            this.ctx.canvas.width - this.game.imgDeathlyHallows.width / 2 -10,
-            10,
-            this.game.imgDeathlyHallows.width / 2,
-            this.game.imgDeathlyHallows.height / 2
-        )
 
         this.ctx.textAlign = "start";
         //Spell:
@@ -249,6 +247,7 @@ class FinalBattle {
     showElderWand() {
         if ( this.correctSpells === this.spellsToWin ) {
             this.game.deathlyHallows[2].draw();
+            
         }
     }
 
@@ -265,6 +264,7 @@ class FinalBattle {
 
         if ( this.player.collides(this.elderWand) ) {
             if ( !this.elderWand.playedAudio ) {
+                this.audio.pause();
                 this.elderWand.audio.play();
                 this.elderWand.playedAudio = true;
             }
@@ -273,6 +273,14 @@ class FinalBattle {
             this.elderWand.image.src = "/assets/images/favicon.png" 
             this.game.deathlyHallowsImgStatus = "three";
             this.isCollected = true;
+            this.ctx.drawImage(
+                this.game.imgDeathlyHallows,
+                this.ctx.canvas.width - this.game.imgDeathlyHallows.width / 2 -10,
+                10,
+                this.game.imgDeathlyHallows.width / 2,
+                this.game.imgDeathlyHallows.height / 2
+            )
+
             setTimeout(() => {
                 this.restartSettings();
                 this.game.win();
@@ -304,6 +312,7 @@ class FinalBattle {
                         this.typedSpell = "";
                         this.indexChar = 0;
                         console.log("palabra correcta")
+                        this.game.score += 600;
                     }
                 
             }
@@ -325,6 +334,7 @@ class FinalBattle {
     //Stop the final battle:
     stop() {
         this.started = false;
+        this.audio.pause();
         clearInterval(this.drawInterval);
         clearInterval(this.timeInterval);
     }

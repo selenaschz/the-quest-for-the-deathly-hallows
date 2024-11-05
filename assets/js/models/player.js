@@ -53,6 +53,9 @@ class Player {
 
         this.actionsEnabled = true; //Enable or disable player actions
 
+        this.audioJump = new Audio("assets/audio/player/jump.mp3");
+        this.audioHurt = new Audio("assets/audio/player/hurt.mp3");
+
     }
 
     //--Event listener to player actions:--
@@ -174,9 +177,14 @@ class Player {
         this.x += this.vx;
         this.y += this.vy;
 
-        //The right or left edge of the canvas
-        if( this.x + this.width >= this.ctx.canvas.width || this.x <= 0 ) {
+        //The left edge of the canvas
+        if( this.x <= 0 ) {
             this.x = 0;
+        }
+
+        //The right edge of the canvas
+        if ( this.x + this.width >= this.ctx.canvas.width ) {
+            this.x = this.ctx.canvas.width - this.width;
         }
 
         //The bottom edge of the canvas:
@@ -202,9 +210,8 @@ class Player {
     //--Lose life--
     loseLife() {
         if ( !this.invulnerable ) {
-            const hurt = new Audio("assets/audio/player/hurt.mp3");
-            hurt.volume = 0.05;
-            hurt.play();
+            this.audioHurt.volume = 0.05;
+            this.audioHurt.play();
             this.health--;
             this.invulnerable = true;
             
@@ -227,7 +234,7 @@ class Player {
             //The player can to cast spell every 5 seconds:
             setTimeout(() => {
                 this.spell.isActive = false;
-            }, 5000) 
+            }, 3000) 
         }
 
     }
@@ -237,10 +244,8 @@ class Player {
         if( !this.actions.jump && this.actionsEnabled ) {
             this.vy -= 20;
             this.actions.jump = true;
-
-            const audio = new Audio("assets/audio/player/jump.mp3");
-            audio.volume = 0.1;
-            audio.play();
+            this.audioJump.volume = 0.1;
+            this.audioJump.play();
         }
     }
 
@@ -254,12 +259,8 @@ class Player {
     
     //--Collect items:--
     collect(item) {
-        if( this.actions.collect ) {
-            if ( !item.isCollected && item instanceof ChocolateFrog && this.health < 3) {
-                // item.setHouseImg(this.house);
-                this.health++;
-                item.isCollected = true;
-            }
+        if ( this.actions.collect && item instanceof ChocolateFrog && !item.isCollected ) {
+            item.giveLife(this);
         }
     }
 

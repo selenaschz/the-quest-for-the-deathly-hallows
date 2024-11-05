@@ -109,19 +109,40 @@ h1 {
     background-image: url("../images/menu/background-screen.png");
 }
 
-p, h2, .list-instructions, h3 {
+p, h2, .list-instructions, h3, .scores-list {
+    color:#000937;
     width: 500px;
     margin-left: 50px;
-    font: 0.8rem 'Lora', sans-serif;
+    font: bold 0.8rem 'Lora', sans-serif;
+}
+
+.scores-list {
+    font: 2rem 'Harry Potter', sans-serif;
+}
+
+h3 {
+    font: 0.9rem 'Harry Potter', sans-serif;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+strong {
+    font: bold 0.8rem 'Cinzel', sans-serif;
+    color:#352816
 }
 
 .list-instructions {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
     list-style-type: none;
     padding: 0;
     margin-top: 7px;
+}
+
+.controls-game {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .list-instructions li {
@@ -211,6 +232,28 @@ h2 {
 .playername {
     color:#000937;
     width: 250px;
+}
+
+.scores-list > li {
+    background-color: #0c1336;
+    color: #b39161;
+    font: 1.5rem 'Cinzel', sans-serif;
+    border-radius: 15px ;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    text-align: start;
+    padding-left: 20px;
+    list-style: none;
+}
+
+.scores-list > li:hover {
+    background-color: #b39161;
+    color:#000937;
+    list-style: none;
+}
+
+.scores-list {
+    padding-top: 50px;
 }
 
 
