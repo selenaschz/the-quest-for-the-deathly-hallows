@@ -85,7 +85,7 @@ class FinalBattle {
         //The player have to type 3 spells correctly to win:
         this.spellsToWin = 3;
 
-        this.audio = new Audio("/assets/audio/levels/final-battle.mp3");
+        this.audio = new Audio("assets/audio/levels/final-battle.mp3");
         this.audio.volume = 0.05;
         this.isMute = false;
     }
@@ -270,7 +270,7 @@ class FinalBattle {
             }
             this.elderWand.vx = 0;
             //Changes the elder wand image to the 3 deathly hallows (because the player has already collected them all):
-            this.elderWand.image.src = "/assets/images/favicon.png" 
+            this.elderWand.image.src = "assets/images/favicon.png" 
             this.game.deathlyHallowsImgStatus = "three";
             this.isCollected = true;
             this.ctx.drawImage(
