@@ -12,7 +12,7 @@ body {
     display: flex; 
     flex-direction: column; 
     align-items: center; 
-    background-image: url("../images/background-body.png");
+    background-image: url("../images/backgrounds/background-body.webp");
     background-size: cover;
 }
 
@@ -38,7 +38,7 @@ h1 {
     width: 1000px;
     height: 533px;
     border: 2px solid #000;
-    background-image: url("../images/menu/background-menu.png");
+    background-image: url("../images/menu/background-menu.webp");
     background-size: cover;
 }
 
@@ -106,7 +106,7 @@ h1 {
 
 
 .screen {
-    background-image: url("../images/menu/background-screen.png");
+    background-image: url("../images/menu/background-screen.webp");
 }
 
 p, h2, .list-instructions, h3, .scores-list {
@@ -215,11 +215,11 @@ h2 {
 
 /*Win*/
 .win {
-    background-image: url("../images/win.png");
+    background-image: url("../images/backgrounds/win.webp");
 }
 
 .game-over {
-    background-image: url("../images/game-over.png");
+    background-image: url("../images/backgrounds/gameover.webp");
 }
 
 .result, .playername {

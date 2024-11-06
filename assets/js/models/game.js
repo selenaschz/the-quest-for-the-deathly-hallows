@@ -182,12 +182,12 @@ class Game {
         this.music.currentTime = 0;
         this.resultSound = false;
         this.finalBattle.restartSettings();
-        this.elderWand.isCollected = false;
         this.resurrectionStone.isCollected = false;
         this.invisibilityCloak.isCollected = false;
         this.music.src = "assets/audio/levels/level1.mp3";
         this.chocolateFrog.isCollected = false;
         this.chocolateFrog.isLifeVisible = false;
+        this.deathlyHallowsImgStatus = "not";
 
         //Remove .game-over or .win class
         const resultDiv = document.getElementById("result");
@@ -281,7 +281,7 @@ class Game {
         });
 
         //Draw the corresponding deathly hallow:
-        if ( this.timeLevel - this.elapsedTime <= 40) {
+        if ( this.timeLevel - this.elapsedTime <= 55) {
             this.deathlyHallows[this.level - 1].draw();
         }
 

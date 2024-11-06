@@ -10,7 +10,7 @@ class Background {
         this.vx = 1;
 
         this.bgImg = new Image();
-        this.bgImg.src = `assets/images/${type}.jpg`;
+        this.bgImg.src = `assets/images/backgrounds/${type}.webp`;
 
         this.isLoaded = false;
 
@@ -46,6 +46,6 @@ class Background {
 
     //--Change image--
     setImage(type) {
-        this.bgImg.src = `assets/images/${type}.jpg`;
+        this.bgImg.src = `assets/images/backgrounds/${type}.webp`;
     }
 }

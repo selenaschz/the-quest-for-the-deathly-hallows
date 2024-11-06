@@ -13,7 +13,7 @@ class Player {
 
         //Sprite:
         this.sprite = new Image();
-        this.sprite.src = "assets/images/player/player.png";
+        this.sprite.src = "assets/images/player/player.webp";
 
         this.sprite.horizontalFrameIndex = 0;
         this.sprite.verticalFrameIndex = 0;
@@ -216,12 +216,12 @@ class Player {
             this.invulnerable = true;
             
             //Injured player sprite:
-            this.sprite.src = "assets/images/player/injuredPlayer.png";
+            this.sprite.src = "assets/images/player/injuredPlayer.webp";
 
             //After 1 seconds, player become vulnerable:
             setTimeout(() => {
                 this.invulnerable = false;
-                this.sprite.src = "assets/images/player/player.png";
+                this.sprite.src = "assets/images/player/player.webp";
             }, 1000);
         }
     }
