@@ -278,8 +278,6 @@ class FinalBattle {
         this.elapsedTime = 0;
         this.elderWand.isCollected = false;
         this.started = false;
-        this.isGameOver = false;
-        this.isWin = false;
         this.audio.currentTime = 0;
         this.correctSpells = 0;
         this.indexChar = 0;

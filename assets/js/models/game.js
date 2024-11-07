@@ -188,6 +188,8 @@ class Game {
         this.chocolateFrog.isCollected = false;
         this.chocolateFrog.isLifeVisible = false;
         this.deathlyHallowsImgStatus = "not";
+        this.finalBattle.isGameOver = false;
+        this.finalBattle.isWin = false;
 
         //Remove .game-over or .win class
         const resultDiv = document.getElementById("result");
