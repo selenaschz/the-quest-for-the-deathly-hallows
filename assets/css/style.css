@@ -95,7 +95,7 @@ h1 {
     display: none;
 }
 
-/*--Instructions and Story*/
+/*--Instructions and Story--*/
 .controls {
     width: 1rem;
 }
@@ -156,7 +156,7 @@ hr {
     background-color: #0c1336;
     width: 50%;
     align-self: center;
-    margin-left: 280px;
+
 }
 
 h2 {
@@ -182,7 +182,7 @@ h2 {
     cursor: pointer;
 }
 
-/*House Test*/
+/*-- House Test --*/
 #house-test h2{
     width: 450px;
 }
@@ -206,14 +206,14 @@ h2 {
     color: #0c1336;
 }
 
-/*Game result: Game over or win*/
+/*-- Game result: Game over or win --*/
 .result {
     width: 1000px;
     height: 533px;
     padding-top: 30px;
 }
 
-/*Win*/
+/*-- Win-- */
 .win {
     background-image: url("../images/backgrounds/win.webp");
 }
@@ -256,5 +256,171 @@ h2 {
     padding-top: 50px;
 }
 
+/*-- Responsive Design: --*/
 
+@media (max-width: 1024px) {
+    .menu, .screen {
+        width: 100%;  
+        height: auto; 
+        background-size: cover;  
+        background-position: center center; 
+        margin: 20px auto;
+    }
 
+    .game-over, .win {
+        width: 90%;
+        background-size: cover;
+        background-position: center center;
+        margin: 20px auto;
+    }
+
+    #house-test h2 {
+        width: 75%;
+        font-size: 20px;
+        margin: 20px 0;
+    }
+
+    p {
+        width: 50%;
+        font-size: 11px;
+    }
+
+    #menu-options {
+        margin-bottom: 65px;
+    }
+
+    .bt-options {
+        width: 13rem;
+        font-size: 0.8rem;
+    }
+
+    .scores-list {
+        width: 55%;
+        margin-left: 10px;
+    }
+
+    .scores-list li {
+        font-size: 18px;
+    }
+
+    
+    .list-instructions li, h3 {
+        font-size: 10px;
+        margin-top: 0;
+    }
+
+    hr {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu, .screen {
+        width: 80%;
+        height: auto;
+        padding: 1rem;
+        background-size: cover;  
+        background-position: center center; 
+        margin: 10px auto;
+    }
+
+    #house-test h2 {
+        width: 90%;
+        font-size: 18px;
+        margin: 20px 0;
+    }
+
+    p {
+        margin-left: 0;
+        width: 70%;
+        margin-left: 10px;
+        font-size: 10px;
+        font-size: 10px;
+    }
+
+    .game-over, .win {
+        width: 90%;
+        background-size: cover;
+        background-position: center center;
+        margin: 20px auto;
+    }
+
+    #menu-options {
+        margin-bottom: 50px;
+    }
+
+    .bt-options {
+        width: 13rem;
+        font-size: 0.8rem;
+    }
+
+    .scores-list {
+        width: 65%;
+        margin-left: 14px;
+    }
+
+    .scores-list li {
+        font-size: 14px;
+    }
+
+    .list-instructions li, h3 {
+        font-size: 10px;
+        margin-top: 0;
+    }
+
+    hr {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu, .screen {
+        width: 90%;
+        height: auto;
+        padding: 0.5rem;
+        background-size: cover; 
+        background-position: center center;
+        margin: 10px auto;
+    }
+
+    #house-test h2 {
+        width: 90%;
+        font-size: 15px;
+        margin: 20px 0;
+    }
+
+    p {
+        width: 80%;
+        font-size: 9px;
+        margin-top: 0;
+    }
+
+    .bt-options {
+        width: 13rem;
+        font-size: 0.8rem;
+    }
+
+    .scores-list {
+        width: 80%;
+        margin-left: 10px;
+    }
+
+    .scores-list li {
+        font-size: 14px;
+    }
+
+    .list-instructions, h3 {
+        width: 60%;
+        font-size: 0.6rem;
+        text-align: center;
+        margin-left: 0;
+    }
+
+    hr {
+        width: 100%;
+        margin: 0;
+
+    }
+}

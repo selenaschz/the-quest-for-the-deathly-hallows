@@ -283,7 +283,7 @@ class Game {
         });
 
         //Draw the corresponding deathly hallow:
-        if ( this.timeLevel - this.elapsedTime <= 55) {
+        if ( this.timeLevel - this.elapsedTime <= 30) {
             this.deathlyHallows[this.level - 1].draw();
         }
 
