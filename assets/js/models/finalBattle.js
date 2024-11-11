@@ -263,7 +263,6 @@ class FinalBattle {
         this.elderWand.audio.pause();
         this.elderWand.playedAudio = false;
         this.elderWand.x = this.ctx.canvas.width - 350;
-        this.voldemort.x = this.ctx.canvas.width - 350;
         this.spellPlayer.x = this.player.x + 112;
         this.voldemort.isAlive = true;
         clearInterval(this.timeInterval);

@@ -4,8 +4,8 @@ class Enemy {
 
         this.type = type; //Enemy type
 
-        this.x = (this.type === "troll") ? -5 : this.ctx.canvas.width;
-        this.y = (this.type === "dementor") ? 340 : 350;
+        this.x = this.setX();
+        this.y = this.setY();
 
         this.vx = 3; //Velocity
 
@@ -48,6 +48,29 @@ class Enemy {
             if (this.sprite.frameIndex >= this.sprite.frames) {
                 this.sprite.frameIndex = 0; //Reset the frame Index
             }
+        }
+    }
+
+    //Set x and y positions:
+    setX() {
+        switch (this.type) {
+            case "troll":
+                return -5;
+            case "voldemort":
+                return this.ctx.canvas.width - 350;
+            default:
+                return this.ctx.canvas.width; //Dementor and pixies. 
+        }
+    }
+
+    setY(){
+        switch (this.type) {
+            case "dementor":
+                return 340; 
+            case "voldemort":
+                return this.ctx.canvas.height - 200;
+            default:
+                return 350;  // Troll and Pixies. 
         }
     }
 

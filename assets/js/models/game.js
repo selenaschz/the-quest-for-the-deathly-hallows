@@ -28,7 +28,7 @@ class Game {
         //Characters:
         this.player = new Player( this.ctx, house );
         this.playerName;
-        this.enemies = [new Enemy( this.ctx, "dementor" )];
+        this.enemies = [new Dementor( this.ctx)];
 
         this.enemyTypes = ["dementor", "troll", "pixies"];
         //Add enemies every 300 ticks:
@@ -421,9 +421,24 @@ class Game {
     addEnemy() {
         //Random index:
         const indexType = Math.floor( Math.random() * this.enemyTypes.length);
-        const newEnemy = new Enemy(this.ctx, this.enemyTypes[indexType]);
+        const enemyType = this.enemyTypes[indexType];
+        let newEnemy;
+        switch(enemyType) {
+            case "dementor":
+                newEnemy = new Dementor(this.ctx);
+                break;
+            case "troll":
+                newEnemy = new Troll(this.ctx);
+                break;
+            case "pixies":
+                newEnemy = new Pixies(this.ctx);
+                break;
+        }
 
-        this.enemies.push(newEnemy);
+        if (newEnemy) {
+            this.enemies.push(newEnemy);
+        }
+        
     }
 
     //--Add item--
