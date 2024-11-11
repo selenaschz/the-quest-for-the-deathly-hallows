@@ -1,4 +1,4 @@
-# The Quest for the Deathly Hallows 🪄⚰️🧥
+# The Quest for the Deathly Hallows 🪄🪨🧥
 
 ![Game Banner](assets/images/game-banner.png)
 
@@ -7,53 +7,53 @@ In this game, you play as a Hogwarts student trying to stop **Lord Voldemort** f
 Explore Hogwarts, face enemies, and collect the Hallows before Voldemort does!
 
 📑 Table of Contents
-- [🧙‍♂️ Overview](#overview)
+- [🧙‍♂️ Introduction](#introduction)
 - [🎮 DEMO](#demo)
-- [✨ Features](#features)
-- [📝 Key Learnings](#key-learnings)
-- [🕹️ Controls](#controls)
+- [🐦‍🔥 Features](#features)
+- [💡 Key Learnings](#key-learnings)
+- [🕹️ How to Play](#how-to-play)
 - [🪜 Levels](#levels)
 - [🛠️ Technologies Used](#technologies-used)
 - [🔮 Future Improvements](#future-improvements)
 
 ---
 
-## 🧙‍♂️ Overview
+## 🧙‍♂️ Introduction
 In this **JavaScript-based game**, you must explore Hogwarts, face magical enemies, and collect the **Deathly Hallows** before Voldemort does. 
-He already holds the **Elder Wand**, and your goal is to stop him from obtaining the **Resurrection Stone** and the **Invisibility Cloak**. If Voldemort gets his hands on all three, he will gain immeasurable power and dominate the magical world.
+He already possesses the **Elder Wand**, and your goal is to stop him from obtaining the **Resurrection Stone** and the **Invisibility Cloak**. If Voldemort manages to obtain all three, he will gain unimaginable power and dominate the magical world.
 
-- **Explore Hogwarts and the Forbidden Forest**: Face magical enemies, navigate through the school and the Forbidden Forest, and gather the first two Deathly Hallows before Voldemort does.
-- **Final Duel**: The ultimate challenge is a duel with Voldemort for the Elder Wand. You must defeat him to stop him from completing his plan and saving the wizarding world.
+- **Explore Hogwarts and the Forbidden Forest**: Battle magical enemies, explore Hogwarts and the Forbidden Forest, and gather the first two Deathly Hallows before Voldemort does.
+- **Final Duel**: A typing duel with Voldemort for the Elder Wand. Defeat him to stop his plan and save the wizarding world.
 
 ---
 
 ## 🎮 DEMO
-[Play the Quest for the Deathly Hallows](https://selenaschz.github.io/the-quest-for-the-deathly-hallows/index.html)
+[Play the Quest for the Deathly Hallows✨](https://selenaschz.github.io/the-quest-for-the-deathly-hallows/index.html)
 
 ---
 
-## ✨ Features
+## 🐦‍🔥 Features
 - **Hogwarts House Selection Test**: A quiz inspired by the Sorting Hat that assigns the player to a Hogwarts house based on their answer.
 - **Player Controls**: Walk, jump, cast spells, and collect objects. 
-- **Dynamic gameplay** with 3 levels and challenging enemies.
-- **Collect the Deathly Hallows**: Gather the Resurrection Stone ⚰️(Level 1), Invisibility Cloak 🧥(Level 2) and the Elder Wand 🪄(Level 3 - Final Challenge).
+- **Dynamic gameplay**: 3 levels with enemies that chase the player, following their movement in the direction they go.
+- **Collect the Deathly Hallows**: Resurrection Stone 🪨, Invisibility Cloak 🧥 and Elder Wand 🪄.
 - **Final Challenge**: Defeat Voldemort in a mini-game where you must correctly type spells with a 7-second time limit for each spell.
-- **Player Health & Spells**: Limited spellcasting ability using setTimeout and health management (using chocolate frogs for healing).
+- **Player Health & Spells**: Limited spellcasting and health management (using chocolate frogs for healing).
 - **Ranking System**: Top 5 high scores using localStorage.
 - **Interactive and Responsive Menus**: View different screens, including rankings, and a responsive menu that adjusts according to screen size.
 - **Game Over / Win Screen**: Includes options to restart or exit the game.
 
 ---
 
-## 🧠 Key Learnings
-This project gave me the opportunity to strengthen my **JavaScript**, **HTML**, and **CSS** skills while creating a fully interactive game. Some key concepts I worked with include:
+## 💡 Key Learnings
+This project allowed me to strengthen my **JavaScript**, **HTML**, and **CSS** skills while developing a fully interactive game. Some key concepts I worked with include:
 
 - **Game Logic & Timers**: Managed real-time events such as spell cooldowns and timed challenges using setInterval and setTimeout.
-- **OOP**: Organized the game into classes for enemies, magic items, and Deathly Hallows, using inheritance to define common properties and behaviors ensuring better structure and code reuse.
+- **OOP**: Organized classes for enemies, items, and Deathly Hallows, using inheritance for code reuse.
 - **DOM Manipulation**: Switch between screens and display rankings.
-- **Responsive Design**: Used media queries to ensure the game Menu is properly displayed across different devices.
-- **State Management**: Implemented systems for managing player stats like health, score, and collected relics.
-- **HTML & CSS**: Designed and structured the layout and styling of the game interface, including buttons, menus, and game screens.
+- **Responsive Design**: Used media queries to ensure menus are responsive across devices.
+- **State Management**: Track health, score, and collected deathly hallows.
+- **HTML & CSS**: Styled the layout, buttons, and menus.
 
 ---
 
@@ -83,8 +83,8 @@ This project gave me the opportunity to strengthen my **JavaScript**, **HTML**, 
 
 ## 🔮 Future Improvements
 
-- **More Enemies**: Add new types of enemies, each with unique movement patterns and abilities.
-- **Spell Riddles**: Include magical puzzles where players must correctly answer spell-related riddles or cast the correct spell to advance. These puzzles will test players’ knowledge of spells and magic.
-- **Deadly Obstacles**: Add hazards such as poisonous potions, Devil's Snare, and other dangerous traps to make the levels more challenging.
-- **Moving Platforms**: Introduce moving platforms where the player must jump or climb to avoid obstacles or reach specific objectives.
+- **More Enemies**: Add more enemies with unique abilities.
+- **Spell Riddles**: Magical puzzles where players must answer correctly to progress.
+- **Deadly Obstacles**: Introduce traps like poisonous potions or Devil’s Snare.
+- **Moving Platforms**: Platforms that move, requiring the player to jump or climb.
 
