@@ -1,7 +1,8 @@
 class Game {
     constructor(canvasId, house) {
         this.canvas = document.getElementById(canvasId);
-        this.canvas.width = 1000;
+        this.canvas.width = Math.min(1000, window.innerWidth);
+        this.resizeScreenListener(); //Call the resize screen listener
         this.canvas.height = 533;
         this.ctx = this.canvas.getContext("2d");
         
@@ -499,5 +500,18 @@ class Game {
         //Start the final battle game
         this.finalBattle.start();
         this.finalBattle.move();
+    }
+
+    //--Responsive Design: Canvas --
+    adjustCanvasSize() {
+        //If it is less than 1000px, adjust the canvas width:
+        this.canvas.width = Math.min(1000, window.innerWidth);
+    }
+
+    //Event Listener: Resize screen and adjust canvas size
+    resizeScreenListener() {
+        window.addEventListener('resize', () => {
+            this.adjustCanvasSize();
+        });
     }
 }

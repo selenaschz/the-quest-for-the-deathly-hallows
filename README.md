@@ -4,7 +4,7 @@
   <img src="assets/images/game-banner.png" alt="Descripción de la imagen">
 </p>
 
-This is a **2D magic-adventure game** developed using **JavaScript**, **HTML**, and **CSS** as part of the **Ironhack Web Development Bootcamp**. 
+This is a **2D magic-adventure game** developed using **JavaScript**, **HTML**, and **CSS**. 
 In this game, you play as a Hogwarts student trying to stop **Lord Voldemort** from acquiring the **Deathly Hallows** and using them to rule the magical world. 
 Explore Hogwarts, face enemies, and collect the Hallows before Voldemort does!
 
@@ -43,7 +43,7 @@ He already possesses the **Elder Wand**, and your goal is to stop him from obtai
 - **Final Challenge**: Defeat Voldemort in a mini-game where you must correctly type spells with a 7-second time limit for each spell.
 - **Player Health & Spells**: Limited spellcasting and health management (using chocolate frogs for healing).
 - **Ranking System**: Top 5 high scores using localStorage.
-- **Interactive and Responsive Menus**: View different screens, including rankings, and a responsive menu that adjusts according to screen size.
+- **Interactive and Responsive Menus**: View different screens, including rankings, and a responsive design that adjusts according to screen size.
 - **Game Over / Win Screen**: Includes options to restart or exit the game.
 
 <br>
